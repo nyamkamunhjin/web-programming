@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  justify-content: flex-start;
+  font-family: Tahoma;
+  font-size: 40px;
+  height: 100vh;
+}
+
+.container div {
+  width: 100px;
+  height: 150px;
+  margin: 5px;
+  background-color: #eeeff2;
+  border-left: 10px dotted #D0D0FF;
+  display: flex;
+  align-items: flex-start;
+}
+
+.container div:last-child {
+  margin-left: auto;
+  align-self: flex-end;
+}
+
+.container div:hover {
+  background-color: yellow;
+  color: goldenrod;
+}
+
+.container div p {
+  margin: 0px;
+  margin-left: 10px;
+}
