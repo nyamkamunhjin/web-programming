@@ -3,7 +3,8 @@
   justify-content: flex-start;
   font-family: Tahoma;
   font-size: 40px;
-  height: 100vh;
+  min-height: 100vh;
+  min-width: 100vh;
 }
 
 .container div {
@@ -17,8 +18,12 @@
 }
 
 .container div:last-child {
-  margin-left: auto;
-  align-self: flex-end;
+  position: absolute;
+  /* margin-left: auto; */
+  /* justify-self: end; */
+  /* align-self: flex-end; */
+  right: 0;
+  bottom: 0;
 }
 
 .container div:hover {
