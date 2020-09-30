@@ -27,7 +27,7 @@ class DatePicker {
     // console.log('date:', date);
     return {
       first: new Date(`${date.year}-${date.month}-01`).getDay(),
-      last: new Date(date.year, date.month, 0).getDate(),
+      numOfDays: new Date(date.year, date.month, 0).getDate(),
     };
   }
 
@@ -47,39 +47,40 @@ class DatePicker {
       'December',
     ];
 
-    let table = `<h2>${months[this.date.month - 1]}</h2>`;
+    let table = `<h2>${months[this.date.month - 1]}, ${this.date.year}</h2>`;
     table += '<table><tr>';
     table +=
       '<td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td></tr>';
 
-    const { first: firstDay, last: lastDay } = this.getFirstLastWeekday(
-      this.date
-    );
+    const { first: firstDay, numOfDays } = this.getFirstLastWeekday(this.date);
 
     // get sibling months
     const prevMonth = this.getFirstLastWeekday({
       ...this.date,
-      month: this.date.month - 1 === 0 ? 11 : this.date.month - 1,
+      month: this.date.month - 1 === 0 ? 12 : this.date.month - 1,
     });
 
-    const nextMonth = this.getFirstLastWeekday({
-      ...this.date,
-      month: this.date.month + 1 === 12 ? 0 : this.date.month + 1,
-    });
-    // console.log({
-    //   ...this.date,
-    //   month: this.date.month - 1 === 0 ? 11 : this.date.month - 1,
-    // });
-    // console.log('last month: ', months[lastMonth]);
+    const limit =
+      (firstDay + numOfDays) % 7 !== 0
+        ? 7 * (parseInt((firstDay + numOfDays) / 7) + 1)
+        : 7 * ((firstDay + numOfDays) / 7);
 
-    for (let i = 0, day = 1; day <= lastDay; i++) {
+    console.log(limit);
+    for (let i = 0, day = 1; i < limit; i++) {
       if (i === 0) table += '<tr>';
       if (i !== 0 && i % 7 === 0) table += '</tr><tr>';
-      if (i >= firstDay) {
+      if (i < firstDay) {
+        table += `<td class="dim">${
+          prevMonth.numOfDays - (firstDay - 1) + i
+        }</td>`;
+      }
+      if (i >= firstDay && i < firstDay + numOfDays) {
         table += `<td>${day}</td>`;
         day++;
-      } else {
-        table += `<td></td>`;
+      }
+
+      if (i >= firstDay + numOfDays) {
+        table += `<td class="dim">${i - (numOfDays + firstDay) + 1}</td>`;
       }
     }
     table += '</table>';

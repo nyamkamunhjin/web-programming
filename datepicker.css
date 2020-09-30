@@ -1,4 +1,9 @@
 table,
 td {
+  /* margin: 5em; */
   border: 1px solid black;
+}
+
+.dim {
+  color: grey;
 }
