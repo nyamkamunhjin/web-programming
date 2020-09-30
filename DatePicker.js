@@ -13,7 +13,7 @@ class DatePicker {
   render(date) {
     const element = document.getElementById(this.id);
     this.date = {
-      month: date.getMonth(),
+      month: date.getMonth() + 1,
       day: date.getDate(),
       year: date.getFullYear(),
     };
@@ -24,6 +24,7 @@ class DatePicker {
   }
 
   getFirstLastWeekday(date) {
+    // console.log('date:', date);
     return {
       first: new Date(`${date.year}-${date.month}-01`).getDay(),
       last: new Date(date.year, date.month, 0).getDate(),
@@ -31,12 +32,46 @@ class DatePicker {
   }
 
   generateMonthTable() {
-    let table = '<table><tr>';
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    let table = `<h2>${months[this.date.month - 1]}</h2>`;
+    table += '<table><tr>';
     table +=
       '<td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td></tr>';
-    console.log(this.date);
-    const { firstDay, lastDay } = this.getFirstLastWeekday(this.date);
-    console.log({ firstDay, lastDay });
+
+    const { first: firstDay, last: lastDay } = this.getFirstLastWeekday(
+      this.date
+    );
+
+    // get sibling months
+    const prevMonth = this.getFirstLastWeekday({
+      ...this.date,
+      month: this.date.month - 1 === 0 ? 11 : this.date.month - 1,
+    });
+
+    const nextMonth = this.getFirstLastWeekday({
+      ...this.date,
+      month: this.date.month + 1 === 12 ? 0 : this.date.month + 1,
+    });
+    // console.log({
+    //   ...this.date,
+    //   month: this.date.month - 1 === 0 ? 11 : this.date.month - 1,
+    // });
+    // console.log('last month: ', months[lastMonth]);
+
     for (let i = 0, day = 1; day <= lastDay; i++) {
       if (i === 0) table += '<tr>';
       if (i !== 0 && i % 7 === 0) table += '</tr><tr>';
