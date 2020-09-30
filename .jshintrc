@@ -3,13 +3,16 @@
     // Predefined globals whom JSHint will ignore.
     "browser"       : true,   // Standard browser globals e.g. `window`, `document`.
 
+    "globals"       :  {
+      "Cs142TemplateProcessor": true  // Define globals that are defined in other scripts
+    },
 
     // Development.
     "debug"         : false,  // Allow debugger statements e.g. browser breakpoints.
     "devel"         : true,   // Allow developments statements e.g. `console.log();`.
 
 
-    // ECMAScript 6
+    // ECMAScript 5.
     "esversion": 6,
     "globalstrict"  : true,  // Allow global "use strict" (also enables 'strict').
     "strict": false,         // For this project with run with global strict so don't require local
@@ -25,7 +28,7 @@
     "forin"         : false,  // Tolerate `for in` loops without `hasOwnPrototype`.
     "immed"         : true,   // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
     "latedef"       : true,   // Prohipit variable use before definition.
-    "loopfunc"      : false,  // Allow functions to be defined within loops.
+    "loopfunc"      : true,  // Allow functions to be defined within loops.
     "noarg"         : true,   // Prohibit use of `arguments.caller` and `arguments.callee`.
     "regexp"        : true,   // Prohibit `.` and `[^...]` in regular expressions.
     "regexdash"     : false,  // Tolerate unescaped last dash i.e. `[-...]`.
