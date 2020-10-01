@@ -23,6 +23,7 @@ class DatePicker {
       'December',
     ];
     this.week = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    this.selectedDay = null;
   }
 
   render(date) {
@@ -38,7 +39,7 @@ class DatePicker {
 
     // create buttons
     const buttonPrev = document.createElement('button');
-    buttonPrev.appendChild(document.createTextNode('Prev'));
+    buttonPrev.appendChild(document.createTextNode('<'));
 
     buttonPrev.setAttribute('class', 'btn-prev');
     buttonPrev.addEventListener('click', () => {
@@ -54,7 +55,7 @@ class DatePicker {
     );
 
     const buttonNext = document.createElement('button');
-    buttonNext.appendChild(document.createTextNode('Next'));
+    buttonNext.appendChild(document.createTextNode('>'));
 
     buttonNext.setAttribute('class', 'btn-next');
     buttonNext.addEventListener('click', () => {
@@ -119,15 +120,37 @@ class DatePicker {
         col.appendChild(document.createTextNode(day));
         row.appendChild(col);
       }
+
       if (i >= firstDay && i < firstDay + numOfDays) {
         col = document.createElement('td');
+        col.classList.add('valid-days');
+
         col.appendChild(document.createTextNode(day));
+
         col.addEventListener('click', () => {
+          this.date = {
+            ...this.date,
+            day: day - 1,
+          };
+          // remove other selected class names
+          col.classList.add('selected');
+
+          // console.log(this.selectedDay);
+
+          if (this.selectedDay) this.selectedDay.classList.remove('selected');
+          this.selectedDay = col;
+
           this.callback(this.id, {
             ...this.date,
             day: day - 1,
           });
         });
+
+        if (this.date.day === day) {
+          col.classList.add('selected');
+          this.selectedDay = col;
+        }
+
         row.appendChild(col);
         day++;
       }
@@ -162,8 +185,6 @@ class DatePicker {
     dateElement.innerHTML = '';
     dateElement.appendChild(table);
     this.updateDate();
-
-    // this.render();
   }
 
   onNextClick() {
@@ -178,7 +199,6 @@ class DatePicker {
     dateElement.innerHTML = '';
     dateElement.appendChild(table);
     this.updateDate();
-    // this.render();
   }
 
   updateDate() {

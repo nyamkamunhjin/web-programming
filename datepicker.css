@@ -1,9 +1,55 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
 table,
 td {
+  font-size: large;
+  padding: 0.5em;
+  border-spacing: 0.5em;
   /* margin: 5em; */
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  cursor: pointer;
+  transition: 0.15s;
+  text-align: center;
+}
+
+/* h2 {
+  text-align: center;
+} */
+
+.valid-days:hover {
+  background-color: greenyellow;
+  color: white;
+  border-radius: 50%;
+  transform: scale(1.4);
+}
+
+.date {
+  grid-column-start: 2;
 }
 
 .dim {
   color: grey;
+}
+
+.selected {
+  background-color: greenyellow;
+  color: white;
+  border-radius: 50%;
+}
+
+#datepicker1,
+#datepicker2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+}
+
+.btn-prev,
+.btn-next {
+  border: none;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
 }
