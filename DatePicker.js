@@ -100,7 +100,7 @@ class DatePicker {
     const week = document.createElement('tr');
 
     this.week.map((day) => {
-      const col = document.createElement('td');
+      const col = document.createElement('th');
       col.appendChild(document.createTextNode(day));
       week.appendChild(col);
     });
