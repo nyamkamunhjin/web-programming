@@ -7,7 +7,7 @@ import States from './components/states/States';
 ReactDOM.render(
   <React.Fragment>
     <Header />
-    <States />,
+    <States />
   </React.Fragment>,
   document.getElementById('reactapp')
 );
