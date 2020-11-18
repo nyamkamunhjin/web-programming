@@ -1,9 +1,17 @@
 import React from 'react';
 import {
-  Typography
+  Card,
+  CardActionArea,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Divider,
+  Grid,
+  Typography,
 } from '@material-ui/core';
 import './userPhotos.css';
-
+import fetchModel from '../../lib/fetchModelData';
+import { Link } from 'react-router-dom';
 
 /**
  * Define UserPhotos, a React componment of CS142 project #5
@@ -11,22 +19,79 @@ import './userPhotos.css';
 class UserPhotos extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      photosData: null,
+    };
+  }
 
+  getPhotosDatas = () => {
+    fetchModel(
+      `http://localhost:3000/photosOfUser/${this.props.match.params.userId}`
+    ).then(({ data: photosData }) => {
+      console.log(photosData);
+      this.setState({ photosData });
+      this.getUserDetails();
+    });
+  };
+
+  getUserDetails = () => {
+    fetchModel(
+      `http://localhost:3000/user/${this.props.match.params.userId}`
+    ).then(({ data: user }) => {
+      // console.log(user);
+      this.props.contextUpdater(
+        `Photos of ${user.first_name} ${user.last_name}`
+      );
+    });
+  };
+
+  componentDidMount() {
+    this.getPhotosDatas();
   }
 
   render() {
     return (
-      <Typography variant="body1">
-      This should be the UserPhotos view of the PhotoShare app. Since
-      it is invoked from React Router the params from the route will be
-      in property match. So this should show details of user:
-      {this.props.match.params.userId}. You can fetch the model for the user from
-      window.cs142models.photoOfUserModel(userId):
-        <Typography variant="caption">
-          {JSON.stringify(window.cs142models.photoOfUserModel(this.props.match.params.userId))}
-        </Typography>
-      </Typography>
+      <Grid container spacing={5}>
+        <Grid item xs={12} className="photo-list">
+          {this.state.photosData &&
+            this.state.photosData.map((data, index) => (
+              <Card key={index} className="card-media">
+                <CardHeader title={data.date_time} />
+                {/* <Typography variant="h5"></Typography> */}
 
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    image={`/images/${data.file_name}`}
+                    title={data.date_time}
+                  />
+                  <CardContent>
+                    {data.comments &&
+                      data.comments.map(
+                        ({ date_time, comment, user }, index) => (
+                          <React.Fragment key={index}>
+                            <Divider />
+                            <Typography>
+                              <Link to={`/users/${user._id}`}>
+                                <b>
+                                  {user.first_name} {user.last_name}
+                                </b>
+                              </Link>{' '}
+                              ({date_time})
+                            </Typography>
+                            <Typography variant="body2" color="primary">
+                              {comment}
+                            </Typography>
+                            <Divider />
+                          </React.Fragment>
+                        )
+                      )}
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            ))}
+        </Grid>
+      </Grid>
     );
   }
 }

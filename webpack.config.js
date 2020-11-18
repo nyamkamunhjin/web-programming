@@ -1,6 +1,10 @@
 module.exports = {
   entry: {
     photoShare: './photoShare.jsx',
+    topBar: './components/topBar/TopBar.jsx',
+    userDetail: './components/userDetail/userDetail.jsx',
+    userList: './components/userList/userList.jsx',
+    userPhotos: './components/userPhotos/userPhotos.jsx',
   },
   module: {
     rules: [
@@ -11,7 +15,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [ "style-loader", "css-loader" ],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|jpg|gif)$/,

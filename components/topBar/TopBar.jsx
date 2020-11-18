@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  AppBar, Toolbar, Typography
-} from '@material-ui/core';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import './TopBar.css';
 
 /**
@@ -15,9 +13,12 @@ class TopBar extends React.Component {
   render() {
     return (
       <AppBar className="cs142-topbar-appBar" position="absolute">
-        <Toolbar>
+        <Toolbar className="app-bar">
           <Typography variant="h5" color="inherit">
-              This is the TopBar component
+            Munkhjin Nyamdorj
+          </Typography>
+          <Typography variant="h5" color="inherit">
+            {this.props.contextText}
           </Typography>
         </Toolbar>
       </AppBar>

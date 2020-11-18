@@ -2,3 +2,8 @@
   height: 60;
   justify-content: 'center';
 }
+
+.app-bar {
+  display: flex;
+  justify-content: space-between;
+}
